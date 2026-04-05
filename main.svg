@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+<foreignObject width="100%" height="100%">
+<body xmlns="http://www.w3.org/1999/xhtml" style="margin:0;padding:0;height:100vh;overflow:hidden;background:#000;">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter Tight',system-ui,sans-serif;background:#000;color:#fff;height:100vh;overflow:hidden;}
+#bg{position:fixed;inset:0;z-index:0;overflow:hidden;}
+.orb{position:absolute;border-radius:50%;filter:blur(80px);animation:drift linear infinite;}
+.orb1{width:500px;height:500px;background:rgba(255,255,255,0.04);top:-100px;left:-100px;animation-duration:25s;}
+.orb2{width:400px;height:400px;background:rgba(255,255,255,0.03);bottom:-80px;right:-80px;animation-duration:30s;animation-delay:-10s;}
+.orb3{width:300px;height:300px;background:rgba(255,255,255,0.025);top:40%;left:50%;animation-duration:20s;animation-delay:-5s;}
+@keyframes drift{0%{transform:translate(0,0) scale(1);}33%{transform:translate(40px,-30px) scale(1.05);}66%{transform:translate(-20px,40px) scale(0.97);}100%{transform:translate(0,0) scale(1);}}
+#grid{position:fixed;inset:0;z-index:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:60px 60px;animation:gridpan 40s linear infinite;}
+@keyframes gridpan{0%{background-position:0 0;}100%{background-position:60px 60px;}}
+#app{position:relative;z-index:1;display:flex;flex-direction:column;height:100vh;padding:12px;gap:10px;animation:appin .6s cubic-bezier(.22,1,.36,1) both;}
+@keyframes appin{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+#topbar{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+#header{display:flex;align-items:center;gap:12px;padding:10px 18px;background:rgba(255,255,255,0.05);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.1);border-radius:14px;flex-shrink:0;}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:rgba(255,255,255,0.9);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.logo-inner{width:14px;height:14px;border-radius:50%;background:#000;}
+.logo-text{font-size:15px;font-weight:700;letter-spacing:-0.4px;color:#fff;white-space:nowrap;}
+.logo-text span{color:rgba(255,255,255,0.35);font-weight:300;}
+#chrome{display:flex;align-items:center;gap:8px;padding:8px 14px;background:rgba(255,255,255,0.05);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.08);border-radius:14px;flex:1;}
+.nav-btn{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.7);width:30px;height:30px;border-radius:7px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0;}
+.nav-btn:hover:not(:disabled){background:rgba(255,255,255,0.14);color:#fff;border-color:rgba(255,255,255,0.18);}
+.nav-btn:disabled{opacity:0.25;cursor:default;}
+.nav-btn:active:not(:disabled){transform:scale(0.93);}
+#urlwrap{flex:1;position:relative;display:flex;align-items:center;}
+#urlbar{width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#fff;padding:6px 38px 6px 12px;border-radius:8px;font-size:13px;font-family:'Inter Tight',sans-serif;outline:none;transition:all .2s;caret-color:#fff;}
+#urlbar::placeholder{color:rgba(255,255,255,0.25);}
+#urlbar:focus{background:rgba(255,255,255,0.09);border-color:rgba(255,255,255,0.22);box-shadow:0 0 0 3px rgba(255,255,255,0.05);}
+#go-btn{position:absolute;right:6px;background:rgba(255,255,255,0.88);color:#000;border:none;width:24px;height:24px;border-radius:5px;cursor:pointer;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+#go-btn:hover{background:#fff;transform:scale(1.06);}
+#go-btn:active{transform:scale(0.94);}
+#framewrap{flex:1;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,0.07);background:#111;position:relative;min-height:0;}
+#frame{width:100%;height:100%;border:none;background:#fff;display:block;}
+#loadbar{position:absolute;top:0;left:0;height:2px;background:linear-gradient(90deg,transparent,#fff,transparent);width:0;z-index:10;border-radius:2px;}
+#loadbar.loading{animation:loadanim 1.5s ease-in-out infinite;}
+@keyframes loadanim{0%{width:0%;left:0;}50%{width:50%;left:25%;}100%{width:0%;left:100%;}}
+#statusbar{display:flex;align-items:center;justify-content:space-between;padding:5px 14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);border-radius:10px;flex-shrink:0;}
+#statustext{font-size:11px;color:rgba(255,255,255,0.25);letter-spacing:0.2px;font-weight:300;}
+.dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.18);display:inline-block;margin-left:5px;animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:.2;}50%{opacity:.8;}}
+#splash{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;z-index:5;}
+#splash.gone{display:none;}
+.splash-logo{width:56px;height:56px;border-radius:14px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;animation:float 3s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+.splash-dot{width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,0.15);}
+.splash-title{font-size:20px;font-weight:700;color:rgba(255,255,255,0.7);letter-spacing:-0.5px;}
+.splash-sub{font-size:13px;color:rgba(255,255,255,0.2);font-weight:300;}
+</style>
+
+<div id="bg">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+</div>
+<div id="grid"></div>
+
+<div id="app">
+  <div id="topbar">
+    <div id="header">
+      <div class="logo-mark"><div class="logo-inner"></div></div>
+      <div class="logo-text">Moonlight <span>Browser</span></div>
+    </div>
+    <div id="chrome">
+      <button class="nav-btn" id="back-btn" disabled title="Back">&#8592;</button>
+      <button class="nav-btn" id="fwd-btn" disabled title="Forward">&#8594;</button>
+      <button class="nav-btn" id="reload-btn" title="Reload">&#8635;</button>
+      <div id="urlwrap">
+        <input id="urlbar" type="text" placeholder="Enter any URL to browse freely..."/>
+        <button id="go-btn">&#8594;</button>
+      </div>
+      <button class="nav-btn" id="home-btn" title="Home">&#8962;</button>
+    </div>
+  </div>
+
+  <div id="framewrap">
+    <div id="loadbar"></div>
+    <div id="splash">
+      <div class="splash-logo"><div class="splash-dot"></div></div>
+      <div class="splash-title">Moonlight Browser</div>
+      <div class="splash-sub">Enter any URL above to start browsing</div>
+    </div>
+    <iframe id="frame" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-pointer-lock allow-modals"></iframe>
+  </div>
+
+  <div id="statusbar">
+    <span id="statustext">Ready to browse</span>
+    <span><span class="dot"></span><span class="dot" style="animation-delay:.5s"></span><span class="dot" style="animation-delay:1s"></span></span>
+  </div>
+</div>
+
+<script>
+var PROXY="https://scram.moonlight-app.xyz";
+var hist=[],idx=-1;
+var frame=document.getElementById("frame");
+var urlbar=document.getElementById("urlbar");
+var loadbar=document.getElementById("loadbar");
+var statustext=document.getElementById("statustext");
+var splash=document.getElementById("splash");
+
+function navigate(url){
+  if(!url)return;
+  if(!/^https?:\/\//i.test(url))url="https://"+url;
+  urlbar.value=url;
+  splash.classList.add("gone");
+  loadbar.classList.add("loading");
+  statustext.textContent="Loading...";
+  frame.src=url;
+  if(idx<hist.length-1)hist=hist.slice(0,idx+1);
+  hist.push(url);idx++;
+  updateNav();
+}
+
+function updateNav(){
+  document.getElementById("back-btn").disabled=idx<=0;
+  document.getElementById("fwd-btn").disabled=idx>=hist.length-1;
+}
+
+frame.addEventListener("load",function(){
+  loadbar.classList.remove("loading");
+  statustext.textContent="Secure \u2014 "+urlbar.value;
+});
+
+document.getElementById("go-btn").addEventListener("click",function(){navigate(urlbar.value.trim());});
+urlbar.addEventListener("keydown",function(e){if(e.key==="Enter")navigate(this.value.trim());});
+document.getElementById("back-btn").addEventListener("click",function(){if(idx>0){idx--;var u=hist[idx];urlbar.value=u;frame.src=u;updateNav();}});
+document.getElementById("fwd-btn").addEventListener("click",function(){if(idx<hist.length-1){idx++;var u=hist[idx];urlbar.value=u;frame.src=u;updateNav();}});
+document.getElementById("reload-btn").addEventListener("click",function(){if(frame.src)frame.src=frame.src;});
+document.getElementById("home-btn").addEventListener("click",function(){navigate(PROXY);});
+</script>
+</body>
+</foreignObject>
+</svg>
