@@ -44,8 +44,8 @@ body{font-family:'Inter Tight',system-ui,sans-serif;background:#000;color:#fff;h
 @keyframes pulse{0%,100%{opacity:.2;}50%{opacity:.8;}}
 #splash{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;z-index:5;}
 #splash.gone{display:none;}
-.splash-logo{width:56px;height:56px;border-radius:14px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;animation:float 3s ease-in-out infinite;}
-@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+.splash-logo{width:56px;height:56px;border-radius:14px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;animation:floatup 3s ease-in-out infinite;}
+@keyframes floatup{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
 .splash-dot{width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,0.15);}
 .splash-title{font-size:20px;font-weight:700;color:rgba(255,255,255,0.7);letter-spacing:-0.5px;}
 .splash-sub{font-size:13px;color:rgba(255,255,255,0.2);font-weight:300;}
@@ -92,7 +92,7 @@ body{font-family:'Inter Tight',system-ui,sans-serif;background:#000;color:#fff;h
   </div>
 </div>
 
-<script>
+<script>//<![CDATA[
 var PROXY="https://scram.moonlight-app.xyz";
 var hist=[],idx=-1;
 var frame=document.getElementById("frame");
@@ -103,20 +103,21 @@ var splash=document.getElementById("splash");
 
 function navigate(url){
   if(!url)return;
-  if(!/^https?:\/\//i.test(url))url="https://"+url;
+  if(!url.match(/^https?:\/\//i))url="https://"+url;
   urlbar.value=url;
   splash.classList.add("gone");
   loadbar.classList.add("loading");
   statustext.textContent="Loading...";
   frame.src=url;
-  if(idx<hist.length-1)hist=hist.slice(0,idx+1);
-  hist.push(url);idx++;
+  if(idx < hist.length-1)hist=hist.slice(0,idx+1);
+  hist.push(url);
+  idx++;
   updateNav();
 }
 
 function updateNav(){
-  document.getElementById("back-btn").disabled=idx<=0;
-  document.getElementById("fwd-btn").disabled=idx>=hist.length-1;
+  document.getElementById("back-btn").disabled=(idx<=0);
+  document.getElementById("fwd-btn").disabled=(idx>=hist.length-1);
 }
 
 frame.addEventListener("load",function(){
@@ -126,11 +127,17 @@ frame.addEventListener("load",function(){
 
 document.getElementById("go-btn").addEventListener("click",function(){navigate(urlbar.value.trim());});
 urlbar.addEventListener("keydown",function(e){if(e.key==="Enter")navigate(this.value.trim());});
-document.getElementById("back-btn").addEventListener("click",function(){if(idx>0){idx--;var u=hist[idx];urlbar.value=u;frame.src=u;updateNav();}});
-document.getElementById("fwd-btn").addEventListener("click",function(){if(idx<hist.length-1){idx++;var u=hist[idx];urlbar.value=u;frame.src=u;updateNav();}});
-document.getElementById("reload-btn").addEventListener("click",function(){if(frame.src)frame.src=frame.src;});
+document.getElementById("back-btn").addEventListener("click",function(){
+  if(idx>0){idx--;var u=hist[idx];urlbar.value=u;frame.src=u;updateNav();}
+});
+document.getElementById("fwd-btn").addEventListener("click",function(){
+  if(idx < hist.length-1){idx++;var u=hist[idx];urlbar.value=u;frame.src=u;updateNav();}
+});
+document.getElementById("reload-btn").addEventListener("click",function(){
+  if(frame.src)frame.src=frame.src;
+});
 document.getElementById("home-btn").addEventListener("click",function(){navigate(PROXY);});
-</script>
+//]]></script>
 </body>
 </foreignObject>
 </svg>
