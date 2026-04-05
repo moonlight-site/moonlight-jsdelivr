@@ -65,8 +65,8 @@ body{font-family:'Inter Tight',system-ui,sans-serif;background:#000;color:#fff;h
       <div class="logo-text">Moonlight <span>Browser</span></div>
     </div>
     <div id="chrome">
-      <button class="nav-btn" id="back-btn" disabled title="Back">&#8592;</button>
-      <button class="nav-btn" id="fwd-btn" disabled title="Forward">&#8594;</button>
+      <button class="nav-btn" id="back-btn" disabled="disabled" title="Back">&#8592;</button>
+      <button class="nav-btn" id="fwd-btn" disabled="disabled" title="Forward">&#8594;</button>
       <button class="nav-btn" id="reload-btn" title="Reload">&#8635;</button>
       <div id="urlwrap">
         <input id="urlbar" type="text" placeholder="Enter any URL to browse freely..."/>
