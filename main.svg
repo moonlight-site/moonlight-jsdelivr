@@ -108,7 +108,11 @@ function navigate(url){
   splash.classList.add("gone");
   loadbar.classList.add("loading");
   statustext.textContent="Loading...";
-  frame.src=url;
+  if(url.indexOf(PROXY)===0){
+    frame.src=url;
+  } else {
+    frame.src=PROXY+"/scramjet/url/"+encodeURIComponent(url);
+  }
   if(idx < hist.length-1)hist=hist.slice(0,idx+1);
   hist.push(url);
   idx++;
